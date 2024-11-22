@@ -39,7 +39,7 @@ processor = NotebookOrchestationExecutionManager(processed_directory="./processe
 ### 2. Define Notebooks and Parameters
 Provide a list of notebooks with input paths, output paths, and parameter dictionaries.
 
-![Notebooks](images/notebooks.png)
+![Notebooks](https://raw.githubusercontent.com/JorgeCardona/notebook-orchestration-and-execution-manager/refs/heads/main/images/notebooks.png)
 
 ```python
 notebooks_with_parameters = [
@@ -59,7 +59,7 @@ for input_path, output_path, params in notebooks_with_parameters:
     notebook_results = processor.run_notebook_with_parameters(input_path, output_path, params)
     notebook_execution_results.append(notebook_results)
 ```
-![Execute Notebooks](images/pass_notebook_parameters.png)
+![Execute Notebooks](https://raw.githubusercontent.com/JorgeCardona/notebook-orchestration-and-execution-manager/refs/heads/main/images/pass_notebook_parameters.png)
 
 ### 4. Extract Variables from Notebooks
 Extract variable data and display it in a structured format.
@@ -70,7 +70,7 @@ for notebook_result in notebook_execution_results:
         extracted_data = processor.extract_variable_data_from_notebook_cells(notebook_result)
         processor.display_notebook_variables_and_values_extracted_from_notebook(extracted_data)
 ```
-![Extract Variables](images/extract_notebook_variables.png)
+![Extract Variables](https://raw.githubusercontent.com/JorgeCardona/notebook-orchestration-and-execution-manager/refs/heads/main/images/extract_notebook_variables.png)
 
 ---
 
