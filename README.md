@@ -38,6 +38,23 @@ processor = NotebookOrchestationExecutionManager(processed_directory="./processe
 
 ### 1.1 Parameters Definition
 
+### How to Configure a Cell in JupyterLab to Receive Parameters
+
+1. **Select the cell** you want to configure to receive parameters.
+
+2. **Click on the gear icon** located on the right panel in JupyterLab. This will open the cell metadata editor.
+
+3. **Add a new tag**:
+   - In the metadata editor, locate or create a field named `tags`.
+   - Add a new tag called `parameters`. The correct JSON format should look like this:
+     ```json
+     {
+       "tags": ["parameters"]
+     }
+     ```
+
+4. **Save the changes** and ensure the `parameters` tag has been added correctly.
+
 The recommended practice is to define parameters in the first cell of the notebook. This ensures a clear structure, makes them easy to locate, and provides a centralized configuration that can be used throughout the notebook's execution.
 
 Parameters can be defined in a Markdown, Raw, or Code cell, or even without explicitly defining a cell for this purpose. Parameter injection will automatically take place above the first code cell in the notebook. This provides greater flexibility when working with parameterization tools like Papermill or automating notebook execution in configurable environments.
@@ -67,11 +84,11 @@ Provide a list of notebooks with input paths, output paths, and parameter dictio
 
 ```python
 notebooks_with_parameters = [
-    ("./sample_notebooks/1_Add.ipynb", "./processed_notebook/add_executed.ipynb", {"params": [10, 5, 7]}),
-    ("./sample_notebooks/4_Divide.ipynb", "./processed_notebook/divide_executed.ipynb", {"x": 20, "y": 0}),
-    ("./sample_notebooks/2_Subtract.ipynb", "./processed_notebook/subtract_executed.ipynb", {"x": 10, "y": 3}),
-    ("./sample_notebooks/3_Multiply.ipynb", "./processed_notebook/multiply_executed.ipynb", {"inject_values": {"x": [2, 3], "y": [4, 5]}}),
-    ("./sample_notebooks/5_No_parameters.ipynb", "./processed_notebook/no_parameters_executed.ipynb", {"inject_values": {"x": [2, 3], "y": [4, 5]}}),
+    (f"{original_notebooks_path}/1_Add.ipynb", f"./{processed_notebook_file_path}/add_executed.ipynb", {"params": [10, 5, 7]}),
+    (f"{original_notebooks_path}/2_Subtract.ipynb", f"./{processed_notebook_file_path}/subtract_executed.ipynb", {"x": 10, "y": 3}),
+    (f"{original_notebooks_path}/3_Divide.ipynb", f"./{processed_notebook_file_path}/divide_executed.ipynb", {"x": 20, "y": 0}),
+    (f"{original_notebooks_path}/4_No_parameters.ipynb", f"./{processed_notebook_file_path}/no_parameters_executed.ipynb", {"inject_values": {"x": [2, 3], "y": [4, 5]}}),
+    (f"{original_notebooks_path}/5_Multiply.ipynb", f"./{processed_notebook_file_path}/multiply_executed.ipynb", {"inject_values": {"x": [2, 3], "y": [4, 5]}}),
 ]
 ```
 
