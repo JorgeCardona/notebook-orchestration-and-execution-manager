@@ -3,6 +3,7 @@ import papermill as pm
 import logging
 from IPython.display import display, HTML
 import ast
+import json
 
 # Set up the logging configuration
 logging.basicConfig(
@@ -31,39 +32,115 @@ class NotebookOrchestationExecutionManager:
             os.makedirs(directory)
             logging.info(f"Directory {directory} created.")
 
-    def run_notebook_with_parameters(self, notebook_input_path: str, notebook_output_path: str, params: dict) -> pm.execute_notebook:
+    def run_notebook_with_parameters(self, notebook_input_path: str, notebook_output_path: str, params: dict):
         """
-        Executes a single Jupyter notebook with specified parameters and saves the result
-        in the processed notebooks directory.
+        Executes a Jupyter notebook with the provided parameters, removes any parameter cells from the output, 
+        and provides a link to the result.
+
+        This function performs the following steps:
+        1. Ensures the directory for processed notebooks exists.
+        2. Executes the notebook with the specified input path and parameters.
+        3. Removes the parameter cells from the output notebook.
+        4. Displays a hyperlink to the result of the executed notebook.
 
         Parameters:
-        notebook_input_path (str): The path to the input notebook to execute.
-        notebook_output_path (str): The path to save the processed notebook result.
-        params (dict): The parameters to pass to the notebook.
+        notebook_input_path (str): Path to the input Jupyter notebook that will be executed.
+        notebook_output_path (str): Path where the output Jupyter notebook will be saved.
+        params (dict): A dictionary of parameters to be passed to the notebook during execution.
 
         Returns:
-        pm.execute_notebook: The executed notebook result.
+        execution (pm.execute_notebook): The result of the notebook execution.
         """
+        
         # Ensure the processed notebooks directory exists
         self.create_directory_if_not_exists(self.processed_directory)
 
         logging.info(f"Executing {notebook_input_path} with parameters ⚡ {params} ⚡ ...")
+        
+        execution = None  # Initialize execution variable to track the result
+        
         try:
-            # Execute the notebook with the provided parameters
+            # Execute the notebook with the provided parameters, storing the output even in case of error
             execution = pm.execute_notebook(
                 input_path=notebook_input_path,
                 output_path=notebook_output_path,
-                parameters=params
+                parameters=params,
+                store_error=True  # Ensures the notebook is saved even if there are errors during execution
             )
-            # Create a hyperlink for the result
+
+            # Create a hyperlink for the result and display it
             display(HTML(f"✅ Execution successful, check the result at the following link -> <a href='{notebook_output_path}' target='_blank'>{notebook_output_path}</a>"))
             logging.info(f"Execution of {notebook_input_path} was successful.")
+        
         except Exception as e:
+            # Log and display an error message if the execution fails
             logging.error(f"Error executing {notebook_input_path}: {e}")
-            execution = None
             display(HTML(f"❌ Execution failed, check the error details and result at the following link -> <a href='{notebook_output_path}' target='_blank'>{notebook_output_path}</a>"))
+        
+        finally:
+            # Always try to remove the parameter cells, even if the notebook execution failed
+            try:
+                self.remove_parameter_cells(notebook_output_path)
+            except Exception as e:
+                logging.error(f"Error removing parameter cells from {notebook_output_path}: {e}")
+
+        # Log the completion of the execution process
         logging.info(f"Execution finished for {notebook_input_path}")
+
         return execution
+
+    def remove_parameter_cells(self, notebook_output_path):
+        """
+        Removes all cells containing parameters from the Jupyter notebook.
+        
+        This function reads the notebook from the specified path, searches for all cells 
+        that contain parameters (identified by specific metadata tags), deletes each of 
+        those cells, and saves the modified notebook back to the same location.
+        
+        Parameters:
+        notebook_output_path (str): The file path to the Jupyter notebook from which the 
+                                    parameter cells will be removed.
+        
+        The function assumes that the notebook is a valid Jupyter notebook in JSON format, 
+        and the parameter cells are marked with 'metadata' and 'tags' containing 'parameters'.
+        
+        After executing, the notebook will no longer contain any cells with parameters.
+        """
+        
+        # Open the notebook file and load its content
+        try:
+            with open(notebook_output_path, 'r') as f:
+                notebook_updated = json.load(f)
+        except Exception as e:
+            logging.error(f"Error reading the notebook {notebook_output_path}: {e}")
+            return
+        
+        # Create a list of cells to be deleted
+        cells_to_delete = []
+        
+        # Iterate through the cells in the notebook to find all cells with parameters
+        for i, cell in enumerate(notebook_updated['cells']):
+            if 'metadata' in cell and 'tags' in cell['metadata'] and 'parameters' in cell['metadata']['tags']:
+                cells_to_delete.append(i)  # Collect indices of cells to delete
+
+        if not cells_to_delete:
+            logging.info("No parameter-containing cells were found.")
+            return
+
+        # Delete all identified parameter cells in reverse order to avoid index shifting
+        for i in reversed(cells_to_delete):
+            del notebook_updated['cells'][i]
+
+        # Save the updated notebook back to the original path
+        try:
+            with open(notebook_output_path, 'w') as f:
+                json.dump(notebook_updated, f, indent=4)
+        except Exception as e:
+            logging.error(f"Error saving the updated notebook {notebook_output_path}: {e}")
+            return
+        
+        # Log the number of cells removed
+        logging.info(f"{len(cells_to_delete)} parameter-containing cells were removed from {notebook_output_path}.")
 
     def extract_variable_data_from_notebook_cells(self, notebook_data: dict) -> dict:
         """
