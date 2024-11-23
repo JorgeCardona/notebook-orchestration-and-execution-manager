@@ -36,6 +36,30 @@ from notebook_orchestation_execution_manager import NotebookOrchestationExecutio
 processor = NotebookOrchestationExecutionManager(processed_directory="./processed_notebook")
 ```
 
+### 1.1 Parameters Definition
+
+The recommended practice is to define parameters in the first cell of the notebook. This ensures a clear structure, makes them easy to locate, and provides a centralized configuration that can be used throughout the notebook's execution.
+
+Parameters can be defined in a Markdown, Raw, or Code cell, or even without explicitly defining a cell for this purpose. Parameter injection will automatically take place above the first code cell in the notebook. This provides greater flexibility when working with parameterization tools like Papermill or automating notebook execution in configurable environments.
+
+#### In Mardown Cell
+![Execute Notebooks](https://raw.githubusercontent.com/JorgeCardona/notebook-orchestration-and-execution-manager/refs/heads/main/images/orchestration_1.png)
+
+#### In Code Cell
+![Execute Notebooks](https://raw.githubusercontent.com/JorgeCardona/notebook-orchestration-and-execution-manager/refs/heads/main/images/orchestration_3.png)
+
+#### No Definition Cell
+![Execute Notebooks](https://raw.githubusercontent.com/JorgeCardona/notebook-orchestration-and-execution-manager/refs/heads/main/images/orchestration_5.png)
+
+
+### 1.2 Parameters Injection
+![Execute Notebooks](https://raw.githubusercontent.com/JorgeCardona/notebook-orchestration-and-execution-manager/refs/heads/main/images/orchestration_2.png)
+
+![Execute Notebooks](https://raw.githubusercontent.com/JorgeCardona/notebook-orchestration-and-execution-manager/refs/heads/main/images/orchestration_4.png)
+
+![Execute Notebooks](https://raw.githubusercontent.com/JorgeCardona/notebook-orchestration-and-execution-manager/refs/heads/main/images/orchestration_6.png)
+
+
 ### 2. Define Notebooks and Parameters
 Provide a list of notebooks with input paths, output paths, and parameter dictionaries.
 
@@ -47,6 +71,7 @@ notebooks_with_parameters = [
     ("./sample_notebooks/4_Divide.ipynb", "./processed_notebook/divide_executed.ipynb", {"x": 20, "y": 0}),
     ("./sample_notebooks/2_Subtract.ipynb", "./processed_notebook/subtract_executed.ipynb", {"x": 10, "y": 3}),
     ("./sample_notebooks/3_Multiply.ipynb", "./processed_notebook/multiply_executed.ipynb", {"inject_values": {"x": [2, 3], "y": [4, 5]}}),
+    ("./sample_notebooks/5_No_parameters.ipynb", "./processed_notebook/no_parameters_executed.ipynb", {"inject_values": {"x": [2, 3], "y": [4, 5]}}),
 ]
 ```
 
