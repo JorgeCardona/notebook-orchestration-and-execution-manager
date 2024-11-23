@@ -46,11 +46,7 @@ processor = NotebookOrchestationExecutionManager(processed_directory="./processe
 
 3. **Add a new tag**:
    - In the metadata editor, locate or create a field named `tags`.
-   - Add a new tag called `parameters`. The correct JSON format should look like this:
-     ```json
-     {
-       "tags": ["parameters"]
-     }
+   - Add a new tag called `parameters`.
      ```
 
 4. **Save the changes** and ensure the `parameters` tag has been added correctly.
