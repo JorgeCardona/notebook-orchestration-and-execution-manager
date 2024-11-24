@@ -81,11 +81,11 @@ original_notebooks_path = './sample_notebooks'
 processed_notebook_file_path = './processed_notebook'
 
 notebooks_with_parameters = [
-    (f"{original_notebooks_path}/1_Add.ipynb", f"./{processed_notebook_file_path}/add_executed.ipynb", {"params": [10, 5, 7]}),
-    (f"{original_notebooks_path}/2_Subtract.ipynb", f"./{processed_notebook_file_path}/subtract_executed.ipynb", {"x": 10, "y": 3}),
-    (f"{original_notebooks_path}/3_Divide.ipynb", f"./{processed_notebook_file_path}/divide_executed.ipynb", {"x": 20, "y": 0}),
-    (f"{original_notebooks_path}/4_No_parameters.ipynb", f"./{processed_notebook_file_path}/no_parameters_executed.ipynb", {"inject_values": {"x": [2, 3], "y": [4, 5]}}),
-    (f"{original_notebooks_path}/5_Multiply.ipynb", f"./{processed_notebook_file_path}/multiply_executed.ipynb", {"inject_values": {"x": [2, 3], "y": [4, 5]}}),
+    (f"{original_notebooks_path}/1_Add.ipynb", f"{processed_notebook_file_path}/add_executed.ipynb", {"params": [10, 5, 7]}),
+    (f"{original_notebooks_path}/2_Subtract.ipynb", f"{processed_notebook_file_path}/subtract_executed.ipynb", {"x": 10, "y": 3}),
+    (f"{original_notebooks_path}/3_Divide.ipynb", f"{processed_notebook_file_path}/divide_executed.ipynb", {"x": 20, "y": 0}),
+    (f"{original_notebooks_path}/4_No_parameters.ipynb", f"{processed_notebook_file_path}/no_parameters_executed.ipynb", {"inject_values": {"x": [2, 3], "y": [4, 5]}}),
+    (f"{original_notebooks_path}/5_Multiply.ipynb", f"{processed_notebook_file_path}/multiply_executed.ipynb", {"inject_values": {"x": [2, 3], "y": [4, 5]}}),
 ]
 ```
 
