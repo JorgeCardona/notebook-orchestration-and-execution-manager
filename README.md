@@ -108,7 +108,7 @@ variable_list = []
 for notebook_result in notebook_execution_results:
     if notebook_result:
         extracted_data = processor.extract_variable_data_from_notebook_cells(notebook_result)
-        processor.display_notebook_variables_and_values_extracted_from_notebook(extracted_data)
+        variable_list.append(processor.display_notebook_variables_and_values_extracted_from_notebook(extracted_data))
 ```
 ![Extract Variables](https://raw.githubusercontent.com/JorgeCardona/notebook-orchestration-and-execution-manager/refs/heads/main/images/extract_notebook_variables.png)
 
