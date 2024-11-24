@@ -11,10 +11,10 @@ logging.basicConfig(
     format="%(asctime)s - %(levelname)s - %(message)s",
 )
 
-class NotebookOrchestationExecutionManager:
+class NotebookOrchestrationExecutionManager:
     def __init__(self, processed_directory: str = "./processed_notebook") -> None:
         """
-        Initializes the NotebookOrchestationExecutionManager with a directory for processed notebooks.
+        Initializes the NotebookOrchestrationExecutionManager with a directory for processed notebooks.
 
         Args:
             processed_directory (str): Directory to store processed notebooks.

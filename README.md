@@ -13,7 +13,6 @@ This project provides a Python class and workflow to manage the execution of Jup
 - **Logging**: Track execution steps with detailed logs.
 - **Directory Management**: Automatically manage output directories for processed notebooks.
 
-
 ## Requirements
 - Python 3.6+
 - Libraries: `os`, `papermill`, `logging`, `ast`, `IPython`
@@ -27,13 +26,13 @@ pip install notebook-orchestration-and-execution-manager
 
 ## Usage
 
-### 1. Initialize the NotebookOrchestationExecutionManager
-Create an instance of `NotebookOrchestationExecutionManager`, specifying the directory for processed notebooks.
+### 1. Initialize the NotebookOrchestrationExecutionManager
+Create an instance of `NotebookOrchestrationExecutionManager`, specifying the directory for processed notebooks.
 
 ```python
-from notebook_orchestation_execution_manager import NotebookOrchestationExecutionManager
+from notebook_orchestration_execution_manager import NotebookOrchestrationExecutionManager
 
-processor = NotebookOrchestationExecutionManager(processed_directory="./processed_notebook")
+processor = NotebookOrchestrationExecutionManager(processed_directory="./processed_notebook")
 ```
 
 ### 1.1 Parameters Definition
@@ -116,7 +115,7 @@ for notebook_result in notebook_execution_results:
 
 ## Code Breakdown
 
-### 1. NotebookOrchestationExecutionManager Class
+### 1. NotebookOrchestrationExecutionManager Class
 Handles the execution of notebooks, directory creation, and variable extraction.
 
 #### Methods
