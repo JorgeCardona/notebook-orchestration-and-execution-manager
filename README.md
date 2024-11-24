@@ -104,6 +104,7 @@ for input_path, output_path, params in notebooks_with_parameters:
 Extract variable data and display it in a structured format.
 
 ```python
+variable_list = []
 for notebook_result in notebook_execution_results:
     if notebook_result:
         extracted_data = processor.extract_variable_data_from_notebook_cells(notebook_result)
@@ -111,6 +112,11 @@ for notebook_result in notebook_execution_results:
 ```
 ![Extract Variables](https://raw.githubusercontent.com/JorgeCardona/notebook-orchestration-and-execution-manager/refs/heads/main/images/extract_notebook_variables.png)
 
+### 5. Retrieve the Variable Values from Every Notebook
+```python
+variable_list
+```
+![Extract Variables](https://raw.githubusercontent.com/JorgeCardona/notebook-orchestration-and-execution-manager/refs/heads/main/images/retrieve_variable_values.png)
 ---
 
 ## Code Breakdown
