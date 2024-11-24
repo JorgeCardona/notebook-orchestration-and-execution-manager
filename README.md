@@ -78,6 +78,9 @@ Provide a list of notebooks with input paths, output paths, and parameter dictio
 ![Notebooks](https://raw.githubusercontent.com/JorgeCardona/notebook-orchestration-and-execution-manager/refs/heads/main/images/notebooks.png)
 
 ```python
+original_notebooks_path = './sample_notebooks'
+processed_notebook_file_path = './processed_notebook'
+
 notebooks_with_parameters = [
     (f"{original_notebooks_path}/1_Add.ipynb", f"./{processed_notebook_file_path}/add_executed.ipynb", {"params": [10, 5, 7]}),
     (f"{original_notebooks_path}/2_Subtract.ipynb", f"./{processed_notebook_file_path}/subtract_executed.ipynb", {"x": 10, "y": 3}),
